@@ -1,0 +1,69 @@
+#include <stdio.h>
+
+// Merge function
+void merge(int a[], int t[], int l_pos, int r_pos, int right_end) {
+    int i, left_end, num_elements, tmp_pos;
+
+    left_end = r_pos - 1;
+    tmp_pos = l_pos;
+    num_elements = right_end - l_pos + 1;
+
+    while (l_pos <= left_end && r_pos <= right_end) {
+        if (a[l_pos] <= a[r_pos])
+            t[tmp_pos++] = a[l_pos++];
+        else
+            t[tmp_pos++] = a[r_pos++];
+    }
+
+    while (l_pos <= left_end)
+        t[tmp_pos++] = a[l_pos++];
+
+    while (r_pos <= right_end)
+        t[tmp_pos++] = a[r_pos++];
+
+    for (i = 0; i < num_elements; i++, right_end--)
+        a[right_end] = t[right_end];
+}
+
+// Recursive Merge Sort function
+void merge_sort(int a[], int t[], int left, int right) {
+    int center;
+    if (left < right) {
+        center = (left + right) / 2;
+        merge_sort(a, t, left, center);
+        merge_sort(a, t, center + 1, right);
+        merge(a, t, left, center + 1, right);
+    }
+}
+
+// Main function
+int main() {
+    int arr[100], temp[100], n, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    merge_sort(arr, temp, 0, n - 1);
+
+    printf("Sorted array:\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+
+    return 0;
+}
+
+
+
+
+OUTN PUT
+
+Enter number of elements: 6
+Enter 6 elements:
+38 27 43 3 9 82
+Sorted array:
+3 9 27 38 43 82
