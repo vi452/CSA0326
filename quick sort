@@ -1,0 +1,65 @@
+#include <stdio.h>
+
+void quickSort(int list[10], int first, int last) {
+    int pivot, i, j, temp;
+
+    if (first < last) {
+        pivot = first;
+        i = first;
+        j = last;
+
+        while (i < j) {
+            while (list[i] <= list[pivot] && i < last)
+                i++;
+            while (list[j] > list[pivot])
+                j--;
+
+            if (i < j) {
+                temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+        }
+
+        // Swap pivot element with list[j]
+        temp = list[pivot];
+        list[pivot] = list[j];
+        list[j] = temp;
+
+        // Recursively sort the sublists
+        quickSort(list, first, j - 1);
+        quickSort(list, j + 1, last);
+    }
+}
+
+int main() {
+    int list[10], n, i;
+
+    printf("Enter the number of elements (max 10): ");
+    scanf("%d", &n);
+
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &list[i]);
+    }
+
+    quickSort(list, 0, n - 1);
+
+    printf("Sorted array:\n");
+    for (i = 0; i < n; i++) {
+        printf("%d ", list[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+
+
+
+OUT PUT
+Enter the number of elements (max 10): 6
+Enter 6 elements:
+34 7 23 32 5 62
+Sorted array:
+5 7 23 32 34 62
